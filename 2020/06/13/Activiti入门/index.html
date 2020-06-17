@@ -235,7 +235,27 @@
 <h3 id="设置方式"><a href="#设置方式" class="headerlink" title="设置方式"></a>设置方式</h3><p>运行时RuntimeService和任务服务TaskService都可以设置<br>存在两种方式：</p>
 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">stuComplete</span><span class="params">()</span></span>&#123;</span><br><span class="line">    TaskService taskService = processEngine.getTaskService();</span><br><span class="line">    String taskId = <span class="string">"20004"</span>;</span><br><span class="line">    StudentDTO dto = <span class="keyword">new</span> StudentDTO(<span class="number">1</span>,<span class="string">"小明"</span>);</span><br><span class="line">    <span class="comment">// 实例变量</span></span><br><span class="line">    taskService.setVariable(taskId,<span class="string">"days"</span>,<span class="number">3</span>);</span><br><span class="line">    taskService.setVariable(taskId,<span class="string">"reason"</span>,<span class="string">"身体不舒服"</span>);</span><br><span class="line">    taskService.setVariable(taskId,<span class="string">"std"</span>,dto);</span><br><span class="line">    taskService.complete(taskId);</span><br><span class="line">    System.out.println(<span class="string">"学生请假流程，学员已完成请假任务"</span>);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">stuComplete</span><span class="params">()</span></span>&#123;</span><br><span class="line">    TaskService taskService = processEngine.getTaskService();</span><br><span class="line">    String taskId = <span class="string">"20004"</span>;</span><br><span class="line">    StudentDTO dto = <span class="keyword">new</span> StudentDTO(<span class="number">1</span>,<span class="string">"小明"</span>);</span><br><span class="line">    Map&lt;String,Object&gt; variableMap = <span class="keyword">new</span> HashMap&lt;&gt;();</span><br><span class="line">    variableMap.put(<span class="string">"days"</span>,<span class="number">3</span>);</span><br><span class="line">    variableMap.put(<span class="string">"reason"</span>,<span class="string">"身体不舒服"</span>);</span><br><span class="line">    variableMap.put(<span class="string">"std"</span>,dto);</span><br><span class="line">    taskService.complete(taskId,variableMap);</span><br><span class="line">    System.out.println(<span class="string">"学生请假流程，学员已完成请假任务"</span>);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<pre><code class="java">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">stuComplete</span><span class="params">()</span></span>{
+        TaskService taskService = processEngine.getTaskService();
+        String taskId = <span class="string">"20004"</span>;
+        StudentDTO dto = <span class="keyword">new</span> StudentDTO(<span class="number">1</span>,<span class="string">"小明"</span>);
+        Map&lt;String,Object&gt; variableMap = <span class="keyword">new</span> HashMap&lt;&gt;();
+        variableMap.put(<span class="string">"days"</span>,<span class="number">3</span>);
+        variableMap.put(<span class="string">"reason"</span>,<span class="string">"身体不舒服"</span>);
+        variableMap.put(<span class="string">"std"</span>,dto);
+        taskService.complete(taskId,variableMap);
+        System.out.println(<span class="string">"学生请假流程，学员已完成请假任务"</span>);
+    }
+
+
+## 网关
+### 排他网关
+需要指定条件condition，使用EL表达式，例如`${days&lt;=<span class="number">3</span>}`
+### 并行网关
+不需要指定执行条件condition
+
+## EmailTask
+可以执行发送邮件任务</code></pre>
 
         </div>
 
